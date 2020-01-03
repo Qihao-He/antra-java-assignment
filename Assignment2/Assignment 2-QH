@@ -65,10 +65,40 @@ Assignment 2
 
 16.	Create a program to count how many files/folders are there inside one folder.
 	* the count method should take a parameter called Criteria like this: count(Criteria criteria){}
-	* For Criteria class, multiple conditions should be included such as: folder path, 
-	* includeSubFolder or not, the extension of the file be counted and so on. 
+	* For Criteria class, multiple conditions should be included such as: 
+		folder path, 
+		includeSubFolder or not, 
+		the extension of the file be counted and so on. 
 	* Optional: Take the input from keyboard.
 	* Take care of the invalid inputs. Exception handling.
 	* Get proper result displayed.
-”There are XXX file(s) and XXX folder(s) inside folder XXX with extension XXX.” or something user friendly.
+		”There are XXX file(s) and XXX folder(s) inside folder XXX with extension XXX.” or something user friendly.
 
+import java.util.Scanner;
+/**
+ * @Author: Qihao He
+ * @Date: 1/3/2019
+ */
+public class CountFilesFolders {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);	
+		String text = scan.nextLine();
+		System.out.println(text);
+		CountrFilesFolders cff = new CountFilesFolders();
+		Criteria c = new Criteria();
+		count(c);
+	}
+
+	public void count(Criteria criteria) {
+
+	}
+
+	class Criteria {
+		String folderPath;
+		boolean subFolder;
+		String extension;
+		public Criteria() {
+
+		}
+	}
+}
