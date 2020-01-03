@@ -1,68 +1,177 @@
+/**
+ * @Author: Qihao He
+ * @Date: 1/3/2019
+ */
 Assignment 1
 
 1.	What is JDK? JRE? JVM?
-JDK(Java Development Kit),
-JRE(Java Runtime Environment),
-JVM(Java Virtual Machine)
+	JDK > JRE > JVM
+	JDK(Java Development Kit),
+	JRE(Java Runtime Environment),
+	JVM(Java Virtual Machine)
 
 2.	What is java compiler?
-A compiler that compiles .java to .class. That runs on different JVM on different machines.
+	A compiler that compiles .java to .class. That runs on different JVM on different machines.
 
 3.	Why is java platform independent?
-Because the java code is compiled to .class file and runs on different JVM on different platform, no need to change the java code for different platform. So it is platform independent.
+	Because the java code is compiled to .class file and runs on different JVM on different platform, 
+	no need to change the java code for different platform. So it is platform independent.
 
 4.	What is IDE? Why is it important for developers?
-IDE(Integrated Development Environment). It is a software application that provides comprehensive facilities to computer programmers for s¬¬oftware development.
+	IDE(Integrated Development Environment). 
+	It is a software application that provides comprehensive facilities to computer programmers for
+	 software development.
 
 
 5.	Is Java case sensitive?
-Yes, Java is case sensitive.
+	Yes, Java is case sensitive.
 
 6.	What do the following key words do?
-static, final, public, private, void, null, package, Class, new
-Static: makes a variable, class, method belongs to a class instead of instance.
-Final: a final class cannot be inherited, a final method cannot be override, a final variable cannot be changed once initialized.
-Public: is both a top level class modifier and a inner class modifier, makes a class visible to the whole project 
-Private: is a inner 
-Void:
-Null:
-Package:
-Class:
-New:
+	static, final, public, private, void, null, package, Class, new
 
+	Static: makes a variable, class, method belongs to a class instead of instance.
+
+	Final: a final class cannot be inherited, a final method cannot be override, 
+	a final variable cannot be changed once initialized.
+
+	Public: is both a top level class modifier and a inner class modifier, makes a class, method, variable 
+	visible to the whole project 
+
+	Private: is a inner class modifier that makes a nested class, method, 
+	variable only visible to the current class.
+	
+	Void: a return type that does not require any return value
+
+	Null: a value that is assigned by machine that can not assign by user, similar to empty, not initialized.
+
+	Package: silimar to directory, one project can have many packages/
+
+	Class: means a blueprint, a instance of the class can be created following the blueprint.
+
+	New: can create a new instance using the following class blueprint.
 
 7.	What is primitive type and reference type?
-
-
+	primitive type includes: Numeric type, char type, boolean type
+	reference type: all other class types that are created on heap, 
+	and use a reference on stack to reference to the instance.
 
 8.	Is parameter passed by value or reference?
-
-
+	Java is using pass by value.
 
 9.	What is the output: System.out.println(1 > 0 : “A”:”B”);
-
-
+	A
 
 10.	How to define constants in java?
-
-
+	Use Inner class modifier: Final
 
 11.	What is String? Is it primitive type?
-
-
+	String is a class in Java, not a primitive type.
 
 12.	How to check if a String is representing a number?
-
-
+/**
+ * @Author: Qihao He
+ * @Date: 1/3/2019
+ * static method: Character.isDigit(char ch)
+ */
+public class Solution {
+	public boolean checkStringNumber(String s) {
+	 	if (s == null || s.length() == 0) {
+	 		return false;
+	 	}
+	 	for (char c : s) {
+			if (!Character.isDigit(c)) {
+				System.out.println("not a number!");
+				return false;
+				break;
+			}
+		}
+		System.out.println("It is a number!");
+		return true;
+	 }
+}
+ 
 
 13.	Write a program to implement the following activity diagram:
+import java.util.Scanner;
+/**
+ * @Author: Qihao He
+ * @Date: 1/3/2019
+ * Requirement:
+ * 1. get keyboard input x
+ * 2. if x <= 0, show error message
+ * 		else if x > 0, loop x times call doSomething() method and display the result
+ * 3. doSomethind() method could be one of the following:
+ * 		3.1 sum of 1 to x
+ * 		3.2 Display the current time stamp
+ * 		3.3 Creat file with name x.text
+ * 		3.4 Use the parameter x to do somethind reasonable.
+ * 4. Show quit message
+ */
+public class Solution {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);	
+	    int x = scan.nextInt();
+	    while (x <= 0) {
+	    	System.out.println("Wrong input: x should greater than 0.");
+	    	x = scan.nextInt();
+	    }
+		SumOneToX(x);
+	    System.out.println(x);
+	}
 
+	private void Sum1ToX(int x) {
+		int sum = 0;
+		for (int i = 1; i < x + 1; i++) {
+			sum += i;
+		}
+		System.out.println("sum form 1 to x is: " + sum);
+	}
+}
+	
  
 14.	Write a program to merge two array of int.
-
+/**
+ * @Author: Qihao He
+ * @Date: 1/3/2019
+ */
+public class Solution {
+	public int[] mergeTwoArray(int[] a1, int[] a2) {
+		if (a1 == null || a2 == null) {
+			return a1 == null ? a2 : a1;
+		}
+		final int l1 = a1.length;
+		final int l2 = a2.length;
+		int[] result = new int[]{l1 + l2};
+		int i = 0;
+		for (; i < l1; i++) {
+			result[i] = a1[i];
+		}
+		for (; i < l2 + l1; i++) {
+			result[i] = a2[i - l1];
+		}
+		return result;
+	}
+}
 
 
 15.	Write a program to find the second largest number inside an array of int.
-
-
+/**
+ * @Author: Qihao He
+ * @Date: 1/3/2019
+ */
+public class Solution {
+	public int secondLargestNumber(int[] a) {
+		if (a == null || a.length < 2) {
+			return Integer.MAX_VALUE;
+		}
+		final int len = a.length;
+		PriorityQueue<Integer> maxHeap = new PriorityQueue<>(len, Collections.reverseOrder());
+		for (int n : a) {
+			maxHeap.offer(n);
+		}
+		maxHeap.poll();
+		int result = maxheap.poll();
+		return result;
+	}
+}
 

@@ -4,23 +4,39 @@
  */
 Assignment 2
 1.	Why we need packages in java?
-	We need packages for better organizing different class categories. For better team work and easier management. This can minimize the class scopes of different packages for better performance.
+	For better organizing different class categories, better team work and easier management,
+	minimize the class scopes of different packages for better performance.
+
 2.	What is the default imported package?
+	java.lang is the default imported package.
 
 3.	What is Class? What is Object?
-
+	Class is type of the Object, it is like a blueprint. 
+	Every Object created using the class should follow the class settings(blueprint).
+	Object is an instance of the class that is created.
 
 4.	Why we need constructor?
+	We need constructor to instanciate(new) a class, that creates a instance on heap.
 
 5.	What is the default value of local variable? What is the default value of instance variable?
+	Local variable cannot be left uninitialized, it will have compilation error.
+	Instance variable if it is primitive type, it will be default as 0, false, null if not initialized.
 
 6.	What is garbage collection?
+	It is a mechanism that exists in Java service that cleans up memory space. 
+	It will check if a instance is no longer referenced by any reference. It will remove the instance.
 
 7.	The protected data can be accessed by subclasses or same package. True or false?
+	True.
 
 8.	What is immutable class?
+	Immutable class is that a instance of that class, once created, cannot be overwritten.	
+	String is a immutable class, once a String instance is created, 
+	there is no way to change the instance value.
 
 9.	What’s the difference between “==” and equals method?
+	"==": compare the values in the internpool, also used for comparing memeory address.
+	equals(): it is comparing the values set in compare() method.
 
 10.	What is wrapper class?
 
