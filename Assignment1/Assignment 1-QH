@@ -1,0 +1,68 @@
+Assignment 1
+
+1.	What is JDK? JRE? JVM?
+JDK(Java Development Kit),
+JRE(Java Runtime Environment),
+JVM(Java Virtual Machine)
+
+2.	What is java compiler?
+A compiler that compiles .java to .class. That runs on different JVM on different machines.
+
+3.	Why is java platform independent?
+Because the java code is compiled to .class file and runs on different JVM on different platform, no need to change the java code for different platform. So it is platform independent.
+
+4.	What is IDE? Why is it important for developers?
+IDE(Integrated Development Environment). It is a software application that provides comprehensive facilities to computer programmers for s¬¬oftware development.
+
+
+5.	Is Java case sensitive?
+Yes, Java is case sensitive.
+
+6.	What do the following key words do?
+static, final, public, private, void, null, package, Class, new
+Static: makes a variable, class, method belongs to a class instead of instance.
+Final: a final class cannot be inherited, a final method cannot be override, a final variable cannot be changed once initialized.
+Public: is both a top level class modifier and a inner class modifier, makes a class visible to the whole project 
+Private: is a inner 
+Void:
+Null:
+Package:
+Class:
+New:
+
+
+7.	What is primitive type and reference type?
+
+
+
+8.	Is parameter passed by value or reference?
+
+
+
+9.	What is the output: System.out.println(1 > 0 : “A”:”B”);
+
+
+
+10.	How to define constants in java?
+
+
+
+11.	What is String? Is it primitive type?
+
+
+
+12.	How to check if a String is representing a number?
+
+
+
+13.	Write a program to implement the following activity diagram:
+
+ 
+14.	Write a program to merge two array of int.
+
+
+
+15.	Write a program to find the second largest number inside an array of int.
+
+
+
