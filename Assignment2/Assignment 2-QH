@@ -39,20 +39,34 @@ Assignment 2
 	equals(): it is comparing the values set in compare() method.
 
 10.	What is wrapper class?
+	A Wrapper class is a class whose object wraps or contains a primitive data types. 
+	When we create an object to a wrapper class, it contains a field and in this field, 
+	we can store a primitive data types. 
+	In other words, we can wrap a primitive value into a wrapper class object.
 
 11.	What is autoboxing?
+	Autoboxing is the automatic conversion that the Java compiler makes between the primitive types and 
+	their corresponding object wrapper classes. For example, converting an int to an Integer, 
+	a double to a Double, and so on. If the conversion goes the other way, this is called unboxing.
 
 12.	StringBuilder is threadsafe but slower than StringBuffer, true or false?
+	False, StringBuilder is unsynchronized (not thread safe), StringBuffer is synchronized (thread safe), 
+	StringBuilder is faster than StringBuffer because it's not synchronized.
 
 13.	Constructor can be inherited, true or false?
+	Constructors are not members, so they are not inherited by subclasses, 
+	but the constructor of the superclass can be invoked from the subclass.
 
 14.	How to call a super class’s constructor?
+	super();
 
 15.	Which class is the super class of all classes?
+	lang.Object class
 
 16.	Create a program to count how many files/folders are there inside one folder.
 	* the count method should take a parameter called Criteria like this: count(Criteria criteria){}
-	* For Criteria class, multiple conditions should be included such as: folder path, includeSubFolder or not, the extension of the file be counted and so on. 
+	* For Criteria class, multiple conditions should be included such as: folder path, 
+	* includeSubFolder or not, the extension of the file be counted and so on. 
 	* Optional: Take the input from keyboard.
 	* Take care of the invalid inputs. Exception handling.
 	* Get proper result displayed.
