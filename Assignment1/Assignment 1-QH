@@ -71,6 +71,7 @@ Assignment 1
 /**
  * @Author: Qihao He
  * @Date: 1/3/2019
+ * Description: How to check if a String is representing a number?
  * static method: Character.isDigit(char ch)
  */
 public class Solution {
@@ -133,6 +134,7 @@ public class Solution {
 /**
  * @Author: Qihao He
  * @Date: 1/3/2019
+ * Description: merge two array of int.
  */
 public class Solution {
 	public int[] mergeTwoArray(int[] a1, int[] a2) {
@@ -158,6 +160,7 @@ public class Solution {
 /**
  * @Author: Qihao He
  * @Date: 1/3/2019
+ * Description: find the second largest number inside an array of int.
  */
 public class Solution {
 	public int secondLargestNumber(int[] a) {
