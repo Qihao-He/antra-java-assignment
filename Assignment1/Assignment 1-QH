@@ -116,20 +116,26 @@ public class SumFrom1ToX {
         System.out.println("Sum 1 to X:\nPlease input a number greater than 0: ");
         Scanner scan = new Scanner(System.in);
         int x = scan.nextInt();
-        while (x <= 0) {
-            System.out.println("Wrong input: x should greater than 0.");
+        while (x < 0) {
+            System.out.println("Not valid input:" + x + " should greater than 0.");
             x = scan.nextInt();
         }
         System.out.println("Your input is: " + x);
         si.Sum1ToX(x);
+        System.out.println("Thank you for using SumFrom1ToX, Bye. By Qihao He.");
     }
 
-    private void Sum1ToX(int x) {
+    public int Sum1ToX(int x) {
+        if (x < 0) {
+            System.out.println("Wrong input: x should greater than 0.");
+            return Integer.MIN_VALUE;
+        }
         int sum = 0;
         for (int i = 1; i < x + 1; i++) {
             sum += i;
         }
         System.out.println("sum from 1 to " + x + " is: " + sum);
+        return sum;
     }
 }
 	
