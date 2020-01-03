@@ -80,12 +80,36 @@ import java.util.Scanner;
 /**
  * @Author: Qihao He
  * @Date: 1/3/2019
+ * Requirement:
+ * 1. get keyboard input x
+ * 2. if x <= 0, show error message
+ * 		else if x > 0, loop x times call doSomething() method and display the result
+ * 3. doSomethind() method could be one of the following:
+ * 		3.1 sum of 1 to x
+ * 		3.2 Display the current time stamp
+ * 		3.3 Creat file with name x.text
+ * 		3.4 Use the parameter x to do somethind reasonable.
+ * 4. Show quit message
  */
 public class Solution {
 	public static void main(String[] args) {
-
+		Scanner scan = new Scanner(System.in);	
+	    int x = scan.nextInt();
+	    while (x <= 0) {
+	    	System.out.println("Wrong input: x should greater than 0.");
+	    	x = scan.nextInt();
+	    }
+		SumOneToX(x);
+	    System.out.println(x);
 	}
 
+	private void Sum1ToX(int x) {
+		int sum = 0;
+		for (int i = 1; i < x + 1; i++) {
+			sum += i;
+		}
+		System.out.println("sum form 1 to x is: " + sum);
+	}
 }
 	
  
