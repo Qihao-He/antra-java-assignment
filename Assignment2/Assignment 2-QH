@@ -53,12 +53,34 @@ Assignment 2
 	False, StringBuilder is unsynchronized (not thread safe), StringBuffer is synchronized (thread safe), 
 	StringBuilder is faster than StringBuffer because it's not synchronized.
 
+	
 13.	Constructor can be inherited, true or false?
 	Constructors are not members, so they are not inherited by subclasses, 
 	but the constructor of the superclass can be invoked from the subclass.
 
 14.	How to call a super class’s constructor?
-	super();
+/**
+ * @Author: Qihao He
+ * @Date: 1/3/2019
+ * super()
+ */
+public class Vehicle {
+	int wheels;
+
+	public Vehicle(int wheels) {
+		this.wheels = wheels;
+	} 
+}
+
+public class car extends Vehicle {
+	int wheels;
+
+	public Car(int wheels) {
+		super(wheels);
+		this.wheels = wheels;
+	}
+} 
+	
 
 15.	Which class is the super class of all classes?
 	lang.Object class
