@@ -1,0 +1,251 @@
+Assignment 3
+1.	Explain polymorphism.
+	It is a concept by which we can perform a single action in different ways. Polymorphism means many forms. There are two types of polymorphism in Java: compile-time polymorphism and runtime polymorphism. We can perform polymorphism in Java by method overloading and method overriding.
+
+2.	What is overloading?
+	The methods within a class can have the same name if they have different paramenter lists.
+
+3.	What is overriding?
+	An instance method in a subclass with the same signature(name, plus the number and the type of its parameters) and return type as an instance method in the superclass overrides the superclass's method. The ability of a subclass to override a method allows a class to inherit from a superclass whose behavior is "close enough" and then to modify behavior as needed. An overriding method can also return a subtype of the type returned by the overridden method. This subtype is called a covariant return type.
+
+4.	What does the final mean in this method:  public void doSomething(final Car aCar){}
+	The final keyword on a method parameter means absolutely nothing to the caller. It also means absolutely nothing to the running program, since its presence or absence doesn't change the bytecode. It only ensures that the compiler will complain if the parameter variable is reassigned within the method.
+
+public class FinalVariables {
+    public void doSomething(final Car aCar){
+        aCar.vin = 100;
+        System.out.println("aCar's vin is: " + aCar.vin);
+//        aCar = new Car(100);
+    }
+}
+
+5.	Suppose in question 4, the Car class has a method setColor(Color color){…}, inside doSomething method, Can we call aCar.setColor(red);?
+	Yes, the final keyword on a method parameter will not make the instance unchangable. It will make the reference cannot point to another instance.
+
+6.	Can we declare a static variable inside a method?
+	No, static means that it's a variable/method of a class, it belongs to the whole class but not to one of its certain object. This means that static keyword can be used only in a 'class scope' i.e. it doesn't have any sense inside methods.
+
+7.	What is the difference between interface and abstract class?
+	Interface are implicitly abstract and cannot have implementations. Abstract class can have instance methods that implements a default behavior. An abstract class may contain non-final variables. Members of a Java interface are public by default.
+
+8.	Can an abstract class be defined without any abstract methods?
+	Yes, we can have an abstract class without abstract methods as both are independent concepts. Declaring a class abstract means that it cannot be instantiated on its own and can only be sub classed. Declaring a method abstract means that Method will be defined in the subclass.
+
+9.	Since there is no way to create an object of abstract class, what’s the point of constructors of abstract class?
+	A Constructor in Java doesn't actually "build" the object, it is used to initialize fields. If your abstract class has fields x and y, and that you always want them to be initialized in a certain way, no matter what actual concrete subclass is eventually created.
+
+10.	What is a native method?
+	A native method is a Java method(either an instance method or a class method) whose implementation is written in another programming language such as C.
+
+11.	What is marker interface?
+	A marker interface in Java is an interface with no fields or methods. An empty intrface in Java is called a marker interface. Example of marker interfaces are the Serializable, Clonable and Remote interfaces. These are used to indicate some information to compilers or JVMs. 
+
+12.	Why to override equals and hashCode methods?
+	When you need to use your object in the hashing based collection, must override both equals() and hashCode().
+	If two objects are equal using Object class equal method, then the hashcode method should give the same value for these two objects.
+
+13.	What’s the difference between int and Integer?
+	Int is a primitive data type. Integer is a Wrapper class. Integer is a class and thus it can calll various in-built methods defined in the class. Variables of the type Integer store references to the Integer Objects, just as with any other reference(object) type.
+
+14.	What is serialization?
+	Serialization in Java is a mechanism of writing the state of an object into a byte-stram. It is mainly used in Hibernate, RMI, JPA, EJB and JMS technologies. The reverse operation of serialization is called deserialization where byte-stream is converted into an object.
+
+15.	Create List and Map. List A contains 1,2,3,4,10(integer) . Map B contains ("a","1") ("b","2") ("c","10")   (key = string, value = string) 
+Question: get a list which contains all the elements in list A, but not in map B.
+
+/**
+ * @author Qihao He
+ * @date 01/06/2020
+ */
+public class IntegerInListNotInMap {
+    public List<Integer> find(List<Integer> list, Map<String, String> map) {
+        if (map == null || map.size() == 0) {
+            return list;
+        }
+        Set<Integer> mapSet = new HashSet<>();
+        for (String key : map.keySet()) {
+            mapSet.add(Integer.parseInt(map.get(key)));
+        }
+        Set<Integer> listSet = new HashSet<>(list);
+        List<Integer> result = new ArrayList<>();
+        Iterator<Integer> ite = listSet.iterator();
+        while (ite.hasNext()) {
+            Integer temp = ite.next();
+            if (!mapSet.contains(temp)) {
+                result.add(temp);
+            }
+        }
+        return result;
+    }
+}
+
+public class IntegerInListNotInMapTest {
+    IntegerInListNotInMap ii = new IntegerInListNotInMap();
+
+    @Test
+    public void test0() {
+        List<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4,10));
+        Map<String, String> map = new HashMap<>();
+        String[][] mapData = new String[][] {{"a", "1"}, {"b", "2"}, {"c", "10"}};
+        initMap(map, mapData);
+        Set<Integer> exp = new HashSet<>(Arrays.asList(3, 4));
+        assertEquals(exp, new HashSet<>(ii.find(list, map)));
+    }
+
+    public void initMap(Map<String, String> map, String[][] mapData) {
+        for (String[] d : mapData) {
+            map.put(d[0], d[1]);
+        }
+    }
+}
+
+16.	Implement a group of classes that have common behavior/state as Shape. Create Circle, Rectangle and Square for now as later on we may need more shapes. They should have the ability to calculate the area. They should be able to compare using area. Please write a program to demonstrate the classes and comparison.  You can use either abstract or interface. Comparator or Comparable interface.
+
+public interface Shape extends Comparable<Shape>{
+    double calculateArea();
+
+    @Override
+    int compareTo(Shape that);
+}
+
+
+public class Circle implements Shape {
+    private int r;
+
+    public Circle(int r) {
+        this.r = r;
+    }
+
+    @Override
+    public double calculateArea() {
+        return r * r * Math.PI;
+    }
+
+    @Override
+    public int compareTo(Shape that) {
+        double thisArea = this.calculateArea();
+        double thatArea = that.calculateArea();
+        if (thisArea < thatArea) {
+            return -1;
+        } else if (thisArea > thatArea) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public int getR() {
+        return r;
+    }
+
+    public void setR(int r) {
+        this.r = r;
+    }
+}
+
+
+public class Square implements Shape {
+    private int a;
+
+    public Square(int a) {
+        this.a = a;
+    }
+
+    @Override
+    public double calculateArea() {
+        return a * a;
+    }
+
+    @Override
+    public int compareTo(Shape that) {
+        double thisArea = this.calculateArea();
+        double thatArea = that.calculateArea();
+        if (thisArea < thatArea) {
+            return -1;
+        } else if (thisArea > thatArea) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public int getA() {
+        return a;
+    }
+
+    public void setA(int a) {
+        this.a = a;
+    }
+}
+
+
+public class Rectangle implements Shape {
+    private int a;
+    private int b;
+
+    public Rectangle(int a, int b) {
+        this.a = a;
+        this.b = b;
+    }
+
+    @Override
+    public double calculateArea() {
+        return a * b;
+    }
+
+    @Override
+    public int compareTo(Shape that) {
+        double thisArea = this.calculateArea();
+        double thatArea = that.calculateArea();
+        if (thisArea < thatArea) {
+            return -1;
+        } else if (thisArea > thatArea) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public int getA() {
+        return a;
+    }
+
+    public void setA(int a) {
+        this.a = a;
+    }
+
+    public int getB() {
+        return b;
+    }
+
+    public void setB(int b) {
+        this.b = b;
+    }
+
+}
+
+
+public class ShapeTest {
+    Circle c = new Circle(3);
+    Rectangle r = new Rectangle(4,5);
+    Square s = new Square(5);
+
+    @Test
+    public void test0() {
+        System.out.println("circle with r: " + c.getR() + " has area: " + c.calculateArea());
+        System.out.println("rectan with a, b: " + r.getA()+ ", " + r.getB() +" has area: " + r.calculateArea());
+        assertEquals(1, c.compareTo(r));
+    }
+
+    @Test
+    public void test1() {
+        System.out.println("circle with r: " + c.getR() + " has area: " + c.calculateArea());
+        System.out.println("square with a: " + s.getA() + " has area: " + s.calculateArea());
+        assertEquals(1, c.compareTo(s));
+    }
+
+    @Test
+    public void test2() {
+        System.out.println("square with a: " + s.getA() + " has area: " + s.calculateArea());
+        System.out.println("rectan with a, b: " + r.getA()+ ", " + r.getB() +" has area: " + r.calculateArea());
+        assertEquals(1, s.compareTo(r));
+    }
+}
+
