@@ -1,3 +1,7 @@
+/**
+ * @Author: Qihao He
+ * @Date: 1/7/2019
+ */
 Assignment 3
 1.	Explain polymorphism.
 	It is a concept by which we can perform a single action in different ways. Polymorphism means many forms. There are two types of polymorphism in Java: compile-time polymorphism and runtime polymorphism. We can perform polymorphism in Java by method overloading and method overriding.
