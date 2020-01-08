@@ -4,47 +4,112 @@
  */
 Assignment 4
 1. What’s the difference between final, finally? What is finalize()?
-	final is a keyword for 
+	final is a keyword used for class, methods, variables.
+	final class means this class cannot be inherited;
+	final method means this method cannot be override;
+	final variable means this variable cannot be reassigne once assigned.
+	finally is a block that must be executed, follows after try catch block.
+	finalize() is a method that Garbage Collector always calls just before the deletion/destroying the object which is eligible for Garbage Collection, so as to perform clean-up activity.
 
 2. What’s the difference between throw and throws?
-
+	Throws clause is used to declare an exception, which means it works similar to the try-catch block.
+	Throw keyword is used in the method body to throw an exception, while throws is used in method signature to declare the exceptions that can occur in the statements present in the method.
 
 3. What are the two types of exceptions?
-
+	built-in exceptions, user-defined exceptions.
 
 4. What is error in java?
-
+	An Error is a subclass of Throwable that indicates serious  problems that a reasonable application should not try to catch. Most such errors are abnormal conditions. The ThreadDeath error, though a "normal" condition, is also a subclass of Error because most applications should not try to catch it.
 
 5. Exception is object, true or false?
-
+	True, Exception is a class that extends throwable, all classes of Java are extending Object class.
 
 6. Can a finally block exist with a try block but without a catch?
-
+	Yes, we can have try without catch bloc by using finally block. Finally block always executes even if you have exception or return statement in try block except in case of System.exit().
 
 7. From java 1.7, give an example of the try-resource feature.
+	In Java 7, a new try-with-resources approach is introduced, it helps to close resources automatically. The try-with-resources statement is a try statement that declares one or more resources. A resource is an object that must be closed after the program is finished with it. The try-with-resources statement ensures that each resources is closed at the end of the statement. Any object that implements java.lang.AutoCloseable, which includes all objects which implements java.io.Closeable, can be used as a resouce.
+/**
+ * @author Qihao He
+ * @date 01/07/2020
+ * In Java 7, with try-with-resources, the BufferedReader will be closed automatically after try block.
+ */
+public class TryWithResources {
+    public static void main(String[] args) {
+        String line;
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("C:\\testing.txt"))) {
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // br will be closed automatically
+    }
+}
 
+/**
+ * Before Java 7, we have to close the BufferedReader manually.
+ */
+/*
+public class TryWithResources {
+    public static void main(String[] args) {
+        BufferedReader br = null;
+        String line;
+        try {
+            br = new BufferedReader(new FileReader("C:\\testing.txt"));
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+}
+*/
 
 8. What will happen to the Exception object after exception handling?
-
+	Like any other object, the Exception object will get garbage-collected when it is no longer reachable formany live thread. Typically, but not necessarily, no references to the exception oject will be left after exception handling(unless the exception is re-thrown).
 
 9. Can we use String as a condition in switch(str){} clause?
-
+	Beginning with JDK 7, we can use a String literal/constant to control a switch statement, which is not possible in C/C++. Using a String-based switch is an improvement over using the equivalent sequence of if/else statements.
 
 10. What’s the difference between ArrayList, LinkedList and vector?
-
+	LinkedList is implementted as a double linked list. Its performance on add and remove is O(1), better thatn ArrayList, but worse on get and set methods. Vector is almost identical to ArrayList, but it is synchronized. Vector each time doubles its array size, while ArrayList grow 50% of its size each time.
+				ArrayList,	| LinkedList
+	add():|  O(1) amortized,  O(1)
+	get():|  O(1), 			 O(n)
+	remove():|  O(n),  		O(n)
 
 11. What’s the difference between hashTable and hashMap?
-
+	Hashtable is synchronized, HashMap is Unsynchronized. HashMap better for non-theaded applications, as unsynchronized Objects typically perform better than synchronized ones. Hashtable does not allow null keys or values, HashMap allow only one null key, can have many null values.
 
 12. What is static import?
-
+	Static import is a feature introduced in the Java programming language that allows members(fields and methods) which have been scoped within their container class as public static, to be used in Java code without specifying the class in which the field has been defined.
+	Once the static members have been imported, they may be used without qualification.
 
 13. What is static block?
-
+	Static block is a set of instructions that is run only once when a class is loaded into memory. A static block is also called a static initialization block. This is because it is an option for initializing or setting up the class at run-time.
 
 14. Explain the keywords:
 default(java 1.8), break, continue, synchronized, strictfp, transient, volatile, instanceOf
-
+	default: From Java 8 onwards, the default keyword can be used to allow an interface to provide an implementation of a method. This keyword is only available in Java 9 and later. extends. Used in a class declaration to specify the superclass; used in an interface declaration to specify one or more superinterfaces.
+		The default keyword can optionally be used in a swith statement to label a block of statements to be executed if no case matches the specified value. Alternatively, the default keyword can also be used to declare default values in a Java annotation.
+	break: Used to end the executgion in the current loop body.
+	continue: Used to resume program execution at the end of the current loop body. If followed by a label, continue resumes execution at the end of the enclosing labeled loop body.
+	synchronized: Used in the declaration of a method or code block to acquire the mutex lock for an object while the current thread executes teh code. For static methods the object locked is the class's Class. Guarantees that at most one thread at a time operating on the same object executes that code. The mutex lock is automatically released when execution exits the synchronized code. Fields, classes and interfaces cannot be declared as synchronized.
+	strictfp: Used to restrick the precision and rounding of floating point calculations to ensure portability.
+	transient: Declares that an instance field is not part of the default serializaed form of an object. When an object is serialzied, only the values of its non-transient instance fields are included in the default serial representation. When an object is deserialized, transient fields are initialized only to their default value. If the default form is not used, e.g. when a serialPersistentFields table is declared in the class hierarchy, all transient keywords are ignored.
+	volatile: Used in field declarations to specify that the variable is modified asynchronously by concurrently running threads. Methods, classes and interfaces thus cannot be declared volatile, nor can local variables or parameters.
 
 15. Create a program including two threads – thread read and thread write.
 Input file ->Thread read -> Calculate -> buffered area
@@ -85,4 +150,147 @@ Example output file
 1 + 1 = 2
 2 + 2 ­ 2 = 2
 */
+
+
+/**
+ * @author: Qihao He
+ * @date 01/07/2020
+ */
+public class Launcher {
+    public static void main(String[] args) {
+        BlockingQueue<String> queue = new ArrayBlockingQueue<>(1024);
+        ReaderThread reader = new ReaderThread(queue);
+        WriterThread writer = new WriterThread(queue);
+        new Thread(reader).start();
+        new Thread(writer).start();
+    }
+}
+
+public class WriterThread implements Runnable{
+
+    private static final String outputFilePath = "/Users/qihaohe/QH_repository/eclipse_workspace/Leetcode-solutions/src/algorithms/thread/readWritTwoThreads/output.txt";
+    protected BlockingQueue<String> blockingQueue = null;
+
+    public WriterThread(BlockingQueue<String> blockingQueue){
+        this.blockingQueue = blockingQueue;
+    }
+
+    @Override
+    public void run() {
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(new File(outputFilePath));
+            while(true){
+                String buffer = blockingQueue.take();
+                //Check whether end of file has been reached
+                if(buffer.equals("EOF")){
+                    break;
+                }
+                writer.println(buffer);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(InterruptedException e){
+        }finally{
+            writer.close();
+        }
+    }
+}
+
+
+public class ReaderThread implements Runnable{
+
+    private static final String inputFilePath = "/Users/qihaohe/QH_repository/eclipse_workspace/Leetcode-solutions/src/algorithms/thread/readWritTwoThreads/input.txt";
+    protected BlockingQueue<String> blockingQueue;
+
+    public ReaderThread(BlockingQueue<String> blockingQueue){
+        this.blockingQueue = blockingQueue;
+    }
+
+    @Override
+    public void run() {
+        BufferCalculator bc = new BufferCalculator();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(new File(inputFilePath)));
+            String buffer;
+            while((buffer = br.readLine()) != null){
+                blockingQueue.put(bc.calculate(buffer));
+            }
+            blockingQueue.put("EOF");
+            //When end of file has been reached
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch(InterruptedException e){
+        }finally{
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+public class BufferCalculator {
+    private static final char plus = '+', minu = '-', lPar = '(', rPar = ')', spac = ' ';
+
+    public String calculate(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        int l1 = 0, o1 = 1;
+        int l2 = 1, o2 = 1;
+        final int len = s.length();
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < len; i++) {
+            char c = s.charAt(i);
+            if (Character.isDigit(c)) {
+                int num = c - '0';
+                while (i + 1 < len && Character.isDigit(s.charAt(i + 1))) {
+                    num = num * 10 + s.charAt(++i) - '0';
+                }
+                l2 = (o2 == 1 ? l2 * num : l2 / num);
+            } else if (c == lPar) {
+                /*
+                1. preserve current calculation status,
+                2. reset it for next calculation
+                */
+                stack.offerFirst(l1);
+                stack.offerFirst(o1);
+                stack.offerFirst(l2);
+                stack.offerFirst(o2);
+                l1 = 0;
+                o1 = 1;
+                l2 = 1;
+                o2 = 1;
+            } else if (c == rPar) {
+                /*
+                1. preserve the result of current calculation
+                2. restore previous calculation status
+                */
+                int num = l1 + o1 * l2;
+                o2 = stack.pollFirst();
+                l2 = stack.pollFirst();
+                o1 = stack.pollFirst();
+                l1 = stack.pollFirst();
+                l2 = (o2 == 1 ? l2 * num : l2 / num);
+            } else if (c == plus || c == minu) {
+                if (c == minu && (i == 0 || s.charAt(i - 1) == lPar)) {
+                    // corner case: start with -
+                    o1 = -1;
+                    continue;
+                }
+                l1 = l1 + o1 * l2;
+                o1 = (c == plus ? 1 : -1);
+                l2 = 1;
+                o2 = 1;
+            }
+        }
+        return String.valueOf(l1 + o1 * l2);
+    }
+}
 
