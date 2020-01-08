@@ -202,14 +202,15 @@ public class ReaderThread implements Runnable{
 
     private static final String inputFilePath = "/Users/qihaohe/QH_repository/eclipse_workspace/Leetcode-solutions/src/algorithms/thread/readWritTwoThreads/input.txt";
     protected BlockingQueue<String> blockingQueue;
+    private BufferCalculator bc;
 
     public ReaderThread(BlockingQueue<String> blockingQueue){
         this.blockingQueue = blockingQueue;
+        this.bc = new BufferCalculator();
     }
 
     @Override
     public void run() {
-        BufferCalculator bc = new BufferCalculator();
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(new File(inputFilePath)));
