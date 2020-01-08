@@ -209,11 +209,11 @@ public class ReaderThread implements Runnable{
 
     @Override
     public void run() {
-        BufferCalculator bc = new BufferCalculator();
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(new File(inputFilePath)));
             String buffer;
+            BufferCalculator bc = new BufferCalculator();
             while((buffer = br.readLine()) != null){
                 blockingQueue.put(bc.calculate(buffer));
             }
