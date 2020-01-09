@@ -7,3 +7,86 @@ One thread should simulate eastbound vehicles and another thread should simulate
 The vehicles do not have a reverse gear, so the bridge would become deadlocked if both an eastbound vehicle and a westbound vehicle were allowed to drive onto the bridge at the same time. Therefore, mutual exclusion must be enforced. 
 Your solution should avoid both deadlock and starvation (e.g. the bridge being monopolized by westbound vehicles while the eastbound vehicles never get to cross). 
 Vehicles traveling in either direction should wait (sleep) for some amount of time, then attempt to cross. Once a vehicle is on the bridge, it should sleep for some amount of time to simulate how long it takes to drive across the bridge. Output a message when each vehicle drives onto the bridge and another message when that vehicle has completed the crossing. Simulate several vehicles traveling in each direction.
+
+/**
+ * @author: Qihao He
+ * @date 01/08/2020
+ */
+public class Launcher {
+    public static void main(String[] args) {
+        final Bridge bridge = new Bridge();
+        Thread sThread = new Thread(new Bound(bridge, "s"));
+        Thread nThread = new Thread(new Bound(bridge, "n"));
+        sThread.start();
+        nThread.start();
+    }
+}
+
+public class Bridge {
+    private final Semaphore sema;
+
+    public Bridge() {
+        sema = new Semaphore(1);
+    }
+
+    public void crossBridge(Vehicle vehicle) {
+        try {
+            System.out.println(vehicle.getId() + " is WAITING to cross the bridge.");
+            sema.acquire();
+            System.out.println(vehicle.getId() + " is CROSSING the bridge.");
+            TimeUnit.SECONDS.sleep((long)(Math.random() * 10));
+        } catch(InterruptedException iex) {
+            iex.printStackTrace();
+        } finally {
+            System.out.println(vehicle.getId() + " has FINISHED CROSSING the bridge.");
+            sema.release();
+        }
+    }
+}
+
+public class Bound implements Runnable {
+    private Bridge bridge;
+    private String side;
+
+    public Bound(Bridge bridge, String side) {
+        this.bridge = bridge;
+        this.side = side;
+    }
+
+    @Override
+    public void run() {
+        while(true) {
+            Vehicle vehicle = new Vehicle(bridge);
+            Thread a = new Thread(vehicle);
+            vehicle.setId(side + " side Vehicle id " + a.getId());
+            a.start();
+            try{
+                TimeUnit.SECONDS.sleep((long)(Math.random() * 10));
+            } catch(InterruptedException iex) {
+                iex.printStackTrace();
+            }
+        }
+    }
+}
+
+public class Vehicle implements Runnable {
+    private String id;
+    private Bridge bridge;
+
+    public Vehicle(Bridge bridge) {
+        this.bridge = bridge;
+    }
+
+    @Override
+    public void run() {
+        bridge.crossBridge(this);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+}
