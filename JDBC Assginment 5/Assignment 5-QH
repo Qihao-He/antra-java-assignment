@@ -1,0 +1,136 @@
+Assignment 5
+Setup Oracle 11g.
+Write a program using JDBC to connect to the test schema.
+Retrieve data from one table into a List/Set.
+Take EMP table for example, put all readable data into fields of Employee objects. However if the column is foreign key, get the data from the referring table and then set the properties. Such as the DETPNO column.
+Combine with the sorting function.
+Combine with the keyboard input and compile different query sql.
+
+
+
+/**
+ * @Author: Qihao He
+ * @Date: 1/9/2019
+ */
+
+public class QueryToListTest {
+    QueryToList qtl = new QueryToList();
+
+    @Test
+    public void test0() {
+        qtl.GetEmployeeList();
+    }
+}
+
+public class QueryToList {
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://localhost/STUDENTS";
+    private static final String USER = "root";
+    private static final String PASS = "password";
+
+    public List<Employee> GetEmployeeList() {
+        Connection conn = null;
+        Statement stmt = null;
+        List<Employee> result = new ArrayList<>();
+        try {
+            //STEP 2: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            //STEP 3: Open a connection
+            System.out.println("Connecting to a selected database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Connected database successfully...");
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM Employee e JOIN Department d ON " +
+                    "e.department_id = d.department_id ORDER BY e.age DESC";
+            ResultSet rs = stmt.executeQuery(sql);
+            //STEP 5: Extract data from result set
+            while(rs.next()){
+                int id  = rs.getInt("id");
+                int departmentId = rs.getInt("departmentId");
+                Integer age = rs.getInt("age");
+                String first = rs.getString("first");
+                String last = rs.getString("last");
+
+                Employee e = new Employee(id, departmentId, first, last);
+                if (age != null) {
+                    e.setAge(age);
+                }
+                result.add(e);
+
+                System.out.print("ID: " + id);
+                System.out.print("departmentId: " + departmentId);
+                System.out.print(", Age: " + age);
+                System.out.print(", First: " + first);
+                System.out.println(", Last: " + last);
+            }
+            rs.close();
+        } catch (SQLException se){
+            se.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            try{
+                if(stmt != null) {
+                    conn.close();
+                }
+            }catch(SQLException se){}
+            try{
+                if(conn != null){
+                    conn.close();
+                }
+            }catch(SQLException se){
+                se.printStackTrace();
+            }
+        }
+        return result;
+    }
+}
+
+public class Employee {
+    int id;
+    int age;
+    int departmentId;
+    String firstName;
+    String lastName;
+
+    public Employee (int id, int departmentId, String firstName, String lastName) {
+        this.id = id;
+        this.departmentId = departmentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+}
