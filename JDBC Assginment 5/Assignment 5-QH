@@ -106,11 +106,11 @@ public class QueryToList {
 }
 
 public class Employee {
-    int id;
-    int age;
-    int departmentId;
-    String firstName;
-    String lastName;
+    private int id;
+    private int age;
+    private int departmentId;
+    private String firstName;
+    private String lastName;
 
     public Employee (int id, int departmentId, String firstName, String lastName) {
         this.id = id;
