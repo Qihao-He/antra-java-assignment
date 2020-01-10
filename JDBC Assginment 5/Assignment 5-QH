@@ -6,11 +6,6 @@ Take EMP table for example, put all readable data into fields of Employee object
 Combine with the sorting function.
 Combine with the keyboard input and compile different query sql.
 
-
-
-
-
-
 /**
  * @Author: Qihao He
  * @Date: 1/9/2019
